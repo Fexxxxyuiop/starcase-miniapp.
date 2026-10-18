@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0b14">
+<title>StarCase — NFT Gifts</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0b14;color:#f6f5ff;font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;padding:20px 16px 90px}
+header{display:flex;justify-content:space-between;align-items:center;margin:8px 0 24px}
+.logo{font-size:25px;font-weight:900;letter-spacing:-1px}
+.logo span{color:#a77bff}
+.pill{background:#1b192a;border:1px solid #343047;border-radius:14px;padding:10px 12px;font-size:13px}
+h1{font-size:29px;line-height:1.12;margin:8px 0}
+p{color:#aaa7bd}
+.hero{padding:22px;border-radius:25px;background:linear-gradient(135deg,#30205c,#17182e 65%,#101522);border:1px solid #45346d;margin-bottom:25px;overflow:hidden}
+.hero p{font-size:14px;line-height:1.5}
+.primary{border:0;border-radius:13px;padding:13px 17px;background:linear-gradient(100deg,#a16cff,#7354ee);color:white;font-size:14px;font-weight:800}
+.section{display:flex;justify-content:space-between;align-items:center;margin:24px 0 13px}
+h2{font-size:20px;margin:0}
+.muted{font-size:12px;color:#9995af}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.item{background:#151521;border:1px solid #2b293b;border-radius:19px;padding:12px;min-width:0}
+.art{height:112px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:55px;background:radial-gradient(circle at 50% 35%,#45346e,#202035 68%,#171725)}
+.item b{display:block;margin:12px 0 5px;font-size:14px}
+.price{font-size:12px;color:#b7a0ff;margin-bottom:10px}
+.item button{width:100%;padding:10px 5px;border:1px solid #574181;background:#28203e;color:#e9dcff;border-radius:11px;font-weight:700}
+.case{background:linear-gradient(145deg,#29203e,#171722);border:1px solid #393049;border-radius:18px;padding:15px;display:flex;align-items:center;gap:14px}
+.case .emoji{font-size:38px}
+.case b{display:block;margin-bottom:5px}
+.case p{font-size:12px;margin:0}
+.case button{margin-left:auto;white-space:nowrap;border:0;border-radius:10px;padding:10px;background:#7650db;color:white;font-weight:700}
+.wheel{width:190px;height:190px;margin:18px auto;border-radius:50%;border:8px solid #30264c;background:conic-gradient(#a77bff 0 60deg,#252039 60deg 120deg,#7c58e5 120deg 180deg,#28213e 180deg 240deg,#bb91ff 240deg 300deg,#201b33 300deg);display:grid;place-items:center;box-shadow:0 0 30px #7042b633}
+.wheel span{background:#11101b;padding:18px;border-radius:50%;font-weight:900}
+.panel{background:#151521;border:1px solid #2b293b;border-radius:18px;padding:17px;margin-bottom:12px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#11111bf2;border-top:1px solid #2d2a3d;display:flex;justify-content:space-around;padding:10px 3px calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(15px)}
+nav button{background:none;border:0;color:#9c98b2;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:5px}
+nav button strong{font-size:20px;font-weight:500}
+nav button.active{color:#bca0ff}
+.screen{display:none}.screen.active{display:block}
+.toast{position:fixed;left:16px;right:16px;bottom:85px;padding:14px;background:#30234c;border:1px solid #7856b6;border-radius:14px;display:none;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">✦ STAR<span>CASE</span></div>
+  <div class="pill">⭐ <b id="balance">100</b></div>
+</header>
+
+<main>
+<section class="screen active" id="home">
+  <div class="hero">
+    <div class="muted">ТВОЯ КОЛЛЕКЦИЯ НАЧИНАЕТСЯ ЗДЕСЬ</div>
+    <h1>Открывай.<br>Собирай. Улучшай.</h1>
+    <p>Исследуй коллекцию подарков и собирай свой уникальный инвентарь.</p>
+    <button class="primary" onclick="show('shop')">Открыть магазин ↗</button>
+  </div>
+  <div class="section"><h2>Популярное</h2><span class="muted">КОЛЛЕКЦИЯ</span></div>
+  <div class="grid">
+    <div class="item"><div class="art">🧸</div><b>Teddy Bear</b><div class="price">⭐ 25</div><button onclick="buy('Teddy Bear',25,'🧸')">Добавить</button></div>
+    <div class="item"><div class="art">💝</div><b>Heart</b><div class="price">⭐ 20</div><button onclick="buy('Heart',20,'💝')">Добавить</button></div>
+  </div>
+  <div class="section"><h2>Кейсы</h2><span class="muted">3 КАТЕГОРИИ</span></div>
+  <div class="case"><span class="emoji">📦</span><div><b>Starter Case</b><p>Твоя первая коллекция</p></div><button onclick="openCase()">⭐ 10</button></div>
+</section>
+
+<section class="screen" id="shop">
+  <h1>Магазин</h1><p>Выбирай подарок для своей коллекции.</p>
+  <div class="grid">
+    <div class="item"><div class="art">🧸</div><b>Teddy Bear</b><div class="price">⭐ 25</div><button onclick="buy('Teddy Bear',25,'🧸')">Купить</button></div>
+    <div class="item"><div class="art">💝</div><b>Heart</b><div class="price">⭐ 20</div><button onclick="buy('Heart',20,'💝')">Купить</button></div>
+    <div class="item"><div class="art">🌹</div><b>Rose</b><div class="price">⭐ 15</div><button onclick="buy('Rose',15,'🌹')">Купить</button></div>
+    <div class="item"><div class="art">🎂</div><b>Cake</b><div class="price">⭐ 30</div><button onclick="buy('Cake',30,'🎂')">Купить</button></div>
+    <div class="item"><div class="art">🚀</div><b>Rocket</b><div class="price">⭐ 40</div><button onclick="buy('Rocket',40,'🚀')">Купить</button></div>
+    <div class="item"><div class="art">💎</div><b>Diamond</b><div class="price">⭐ 50</div><button onclick="buy('Diamond',50,'💎')">Купить</button></div>
+  </div>
+</section>
+
+<section class="screen" id="cases">
+  <h1>Кейсы</h1><p>Попробуй открыть кейс и получить случайный предмет. Сейчас это демо-механика.</p>
+  <div class="case"><span class="emoji">🥉</span><div><b>Bronze Case</b><p>Базовые подарки</p></div><button onclick="openCase()">⭐ 10</button></div><br>
+  <div class="case"><span class="emoji">🥈</span><div><b>Silver Case</b><p>Коллекция серебра</p></div><button onclick="openCase()">⭐ 25</button></div><br>
+  <div class="case"><span class="emoji">👑</span><div><b>Legendary Case</b><p>Особенная коллекция</p></div><button onclick="openCase()">⭐ 50</button></div>
+</section>
+
+<section class="screen" id="upgrade">
+  <h1>Апгрейдер</h1><p>Демо-колесо для интерфейса. Пока без реальных NFT и серверной проверки.</p>
+  <div class="wheel"><span>✦ SC</span></div>
+  <div class="panel"><b>Шанс улучшения</b><h2 id="chance">65%</h2><p>Результат демонстрационный.</p><button class="primary" onclick="upgrade()">Запустить апгрейд</button></div>
+</section>
+
+<section class="screen" id="inventory">
+  <h1>Инвентарь</h1><p>Твои собранные предметы.</p>
+  <div id="items"><div class="panel">Пока пусто — загляни в магазин!</div></div>
+</section>
+
+<section class="screen" id="profile">
+  <h1>Профиль</h1>
+  <div class="panel"><div style="font-size:42px">👤</div><h2>Игрок StarCase</h2><p>Личный кабинет</p><div class="section"><span>Баланс</span><b>⭐ <span id="profileBalance">100</span></b></div><div class="section"><span>Предметов</span><b id="count">0</b></div></div>
+  <div class="panel"><b>Панель администратора</b><p>Будет подключена после настройки защищённого backend.</p></div>
+</section>
+</main>
+
+<nav>
+<button class="active" data-id="home" onclick="show('home',this)"><strong>⌂</strong>Главная</button>
+<button data-id="shop" onclick="show('shop',this)"><strong>✧</strong>Магазин</button>
+<button data-id="cases" onclick="show('cases',this)"><strong>▣</strong>Кейсы</button>
+<button data-id="upgrade" onclick="show('upgrade',this)"><strong>◉</strong>Апгрейд</button>
+<button data-id="inventory" onclick="show('inventory',this)"><strong>▤</strong>Инвентарь</button>
+<button data-id="profile" onclick="show('profile',this)"><strong>♙</strong>Профиль</button>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script>
+let balance=100, inventory=[];
+function show(id,button){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.id===id));
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function notify(msg){
+ const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';
+ clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',2300);
+}
+function update(){
+ document.getElementById('balance').textContent=balance;
+ document.getElementById('profileBalance').textContent=balance;
+ document.getElementById('count').textContent=inventory.length;
+ document.getElementById('items').innerHTML=inventory.length?'<div class="grid">'+inventory.map((x,i)=>`<div class="item"><div class="art">${x.emoji}</div><b>${x.name}</b><div class="price">Предмет коллекции</div><button onclick="sell(${i})">Продать за ⭐ ${Math.floor(x.price*.8)}</button></div>`).join('')+'</div>':'<div class="panel">Пока пусто — загляни в магазин!</div>';
+}
+function buy(name,price,emoji){
+ if(balance<price){notify('Недостаточно звёзд в демо-балансе');return}
+ balance-=price;inventory.push({name,price,emoji});update();notify('Добавлено в демо-инвентарь: '+name);
+}
+function sell(i){balance+=Math.floor(inventory[i].price*.8);inventory.splice(i,1);update();notify('Предмет продан в демо-режиме')}
+function openCase(){
+ if(balance<10){notify('Недостаточно звёзд');return}
+ balance-=10;
+ const gifts=[['Rose',15,'🌹'],['Heart',20,'💝'],['Teddy Bear',25,'🧸'],['Cake',30,'🎂']];
+ const g=gifts[Math.floor(Math.random()*gifts.length)];
+ inventory.push({name:g[0],price:g[1],emoji:g[2]});update();notify('Выпало: '+g[0]+' (демо)');
+}
+function upgrade(){
+ if(!inventory.length){notify('Сначала добавь предмет в инвентарь');return}
+ const success=Math.random()<.65;
+ if(success){inventory.push({name:'Mystery Gift',price:40,emoji:'💎'});notify('Успех! Демо-подарок добавлен')}
+ else{inventory.pop();notify('Неудача в демо-режиме')}
+ update();
+}
+update();
+</script>
+</body>
+</html>
